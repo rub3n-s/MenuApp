@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tp2_amov/services/remote_service.dart';
+import 'package:tp2_amov/views/edit_page.dart';
 import '../models/menu.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  static const String routeName = '/HomePage';
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -64,8 +67,9 @@ class _HomePageState extends State<HomePage> {
                   itemCount: _menuList!.length,
                   separatorBuilder: (_, __) => const Divider(thickness: 2.0),
                   itemBuilder: (BuildContext context, int index) => InkWell(
-                        onTap: () => print(
-                            "Selected Menu: ${_menuList![index].original.weekDay}"),
+                        onTap: () => Navigator.pushNamed(
+                            context, EditPage.routeName,
+                            arguments: _menuList![index]),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
