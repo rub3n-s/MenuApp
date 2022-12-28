@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         HomePage.routeName: (context) => const HomePage(),
         EditPage.routeName: (context) => const EditPage(),
       },
-      home: const HomePage(),
       debugShowCheckedModeBanner:
           false, // remove o simbolo debug que aparece no canto do ecra
     );
