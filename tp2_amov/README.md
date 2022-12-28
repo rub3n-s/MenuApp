@@ -4,8 +4,4 @@ School Menu App
 
 ## Getting Started
 
-Install Docker
-Run Commands:
-  -
-  -
- Run App
+Install Docker and Start the Server
