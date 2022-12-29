@@ -86,14 +86,11 @@ class _HomePageState extends State<HomePage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          color: Colors.grey),
-                                    ),
+                                    SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: Image.network(
+                                            'http://10.0.2.2:8080/images/soup.png')),
                                     const SizedBox(
                                       width: 16,
                                     ),
@@ -121,14 +118,11 @@ class _HomePageState extends State<HomePage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          color: Colors.grey),
-                                    ),
+                                    SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: Image.network(
+                                            'http://10.0.2.2:8080/images/meat.png')),
                                     const SizedBox(
                                       width: 16,
                                     ),
@@ -156,14 +150,11 @@ class _HomePageState extends State<HomePage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          color: Colors.grey),
-                                    ),
+                                    SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: Image.network(
+                                            'http://10.0.2.2:8080/images/fish.png')),
                                     const SizedBox(
                                       width: 16,
                                     ),
@@ -191,14 +182,11 @@ class _HomePageState extends State<HomePage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          color: Colors.grey),
-                                    ),
+                                    SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: Image.network(
+                                            'http://10.0.2.2:8080/images/vegetarian.png')),
                                     const SizedBox(
                                       width: 16,
                                     ),
@@ -222,20 +210,17 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                              //====================== VEGETARIAN ======================
+                              //====================== DESERT ======================
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          color: Colors.grey),
-                                    ),
+                                    SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: Image.network(
+                                            'http://10.0.2.2:8080/images/desert.png')),
                                     const SizedBox(
                                       width: 16,
                                     ),
