@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tp2_amov/services/remote_service.dart';
 import 'package:tp2_amov/views/edit_page.dart';
 import '../models/menu.dart';
@@ -41,13 +42,64 @@ class _HomePageState extends State<HomePage> {
   }
 
   createMenuList() {
-    _menuList = [
-      menu!.monday,
-      menu!.tuesday,
-      menu!.thursday,
-      menu!.wednesday,
-      menu!.friday
-    ];
+    debugPrint(DateFormat('EEEE').format(DateTime.now()));
+
+    switch (DateFormat('EEEE').format(DateTime.now())) {
+      case 'Monday':
+        _menuList = [
+          menu!.monday,
+          menu!.tuesday,
+          menu!.thursday,
+          menu!.wednesday,
+          menu!.friday
+        ];
+        break;
+      case 'Tuesday':
+        _menuList = [
+          menu!.tuesday,
+          menu!.thursday,
+          menu!.wednesday,
+          menu!.friday,
+          menu!.monday,
+        ];
+        break;
+      case 'Thursday':
+        _menuList = [
+          menu!.thursday,
+          menu!.wednesday,
+          menu!.friday,
+          menu!.monday,
+          menu!.tuesday
+        ];
+        break;
+      case 'Wednesday':
+        _menuList = [
+          menu!.wednesday,
+          menu!.friday,
+          menu!.monday,
+          menu!.tuesday,
+          menu!.thursday,
+        ];
+        break;
+      case 'Friday':
+        _menuList = [
+          menu!.friday,
+          menu!.monday,
+          menu!.tuesday,
+          menu!.thursday,
+          menu!.wednesday
+        ];
+        break;
+      default:
+        _menuList = [
+          menu!.monday,
+          menu!.tuesday,
+          menu!.thursday,
+          menu!.wednesday,
+          menu!.friday
+        ];
+        break;
+    }
   }
 
   @override
