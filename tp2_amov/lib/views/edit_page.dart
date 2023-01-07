@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tp2_amov/models/screen_arguments.dart';
 
 import '../models/menu.dart';
+import '../services/remote_service.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
@@ -12,7 +14,78 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
-  late final Day _menu = ModalRoute.of(context)!.settings.arguments as Day;
+  late final ScreenArguments _menu =
+      ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+  //late final Day _menu = ModalRoute.of(context)!.settings.arguments as Day;
+  late final Day _updatedDay = _menu.day;
+
+  updateSoup(String value) {
+    if (value.isNotEmpty) {
+      _updatedDay.original.soup = value;
+    } else {
+      _updatedDay.original.soup = _menu.day.original.soup;
+    }
+  }
+
+  updateMeat(String value) {
+    if (value.isNotEmpty) {
+      _updatedDay.original.meat = value;
+    } else {
+      _updatedDay.original.meat = _menu.day.original.meat;
+    }
+  }
+
+  updateFish(String value) {
+    if (value.isNotEmpty) {
+      _updatedDay.original.fish = value;
+    } else {
+      _updatedDay.original.fish = _menu.day.original.fish;
+    }
+  }
+
+  updateVegetarian(String value) {
+    if (value.isNotEmpty) {
+      _updatedDay.original.vegetarian = value;
+    } else {
+      _updatedDay.original.vegetarian = _menu.day.original.vegetarian;
+    }
+  }
+
+  updateDesert(String value) {
+    if (value.isNotEmpty) {
+      _updatedDay.original.desert = value;
+    } else {
+      _updatedDay.original.desert = _menu.day.original.desert;
+    }
+  }
+
+  postToJson() async {
+    // get the current menu
+    /*Menu? tmp = await RemoteService().getMenu();
+
+    debugPrint('Updating Day: ${_updatedDay.original.weekDay}');
+
+    switch (_updatedDay.original.weekDay) {
+      case "MONDAY":
+        tmp!.monday = _updatedDay;
+        break;
+      case "TUESDAY":
+        tmp!.tuesday = _updatedDay;
+        break;
+      case "WEDNESDAY":
+        tmp!.wednesday = _updatedDay;
+        break;
+      case "THURSDAY":
+        tmp!.thursday = _updatedDay;
+        break;
+      case "FRIDAY":
+        tmp!.friday = _updatedDay;
+        break;
+    } */
+
+    // post to json
+    RemoteService().setMenu(_updatedDay.original);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +106,8 @@ class _EditPageState extends State<EditPage> {
                     child: TextFormField(
                         decoration: const InputDecoration(
                             labelText: 'Soup: ', border: OutlineInputBorder()),
-                        initialValue: _menu.original.soup,
+                        initialValue: _menu.day.original.soup,
+                        onChanged: (value) => updateSoup(value),
                         maxLines: null),
                   ),
                   const SizedBox(
@@ -47,7 +121,8 @@ class _EditPageState extends State<EditPage> {
                           labelText: 'Meat: ',
                           border: OutlineInputBorder(),
                         ),
-                        initialValue: _menu.original.meat,
+                        initialValue: _menu.day.original.meat,
+                        onChanged: (value) => updateMeat(value),
                         maxLines: null),
                   ),
                   const SizedBox(
@@ -61,7 +136,8 @@ class _EditPageState extends State<EditPage> {
                           labelText: 'Fish: ',
                           border: OutlineInputBorder(),
                         ),
-                        initialValue: _menu.original.fish,
+                        initialValue: _menu.day.original.fish,
+                        onChanged: (value) => updateFish(value),
                         maxLines: null),
                   ),
                   const SizedBox(
@@ -75,7 +151,8 @@ class _EditPageState extends State<EditPage> {
                           labelText: 'Vegetarian: ',
                           border: OutlineInputBorder(),
                         ),
-                        initialValue: _menu.original.vegetarian,
+                        initialValue: _menu.day.original.vegetarian,
+                        onChanged: (value) => updateVegetarian(value),
                         maxLines: null),
                   ),
                   const SizedBox(
@@ -89,13 +166,19 @@ class _EditPageState extends State<EditPage> {
                           labelText: 'Desert: ',
                           border: OutlineInputBorder(),
                         ),
-                        initialValue: _menu.original.desert,
+                        initialValue: _menu.day.original.desert,
+                        onChanged: (value) => updateDesert(value),
                         maxLines: null),
                   ),
                   const SizedBox(
                     height: 40,
                   ),
-                  ElevatedButton(onPressed: () {}, child: const Text('Confirm'))
+                  ElevatedButton(
+                      onPressed: () {
+                        postToJson();
+                        Navigator.pop(context, true);
+                      },
+                      child: const Text('Confirm'))
                 ],
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tp2_amov/services/remote_service.dart';
 import 'package:tp2_amov/views/edit_page.dart';
 import '../models/menu.dart';
+import '../models/screen_arguments.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -69,7 +70,9 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int index) => InkWell(
                         onTap: () => Navigator.pushNamed(
                             context, EditPage.routeName,
-                            arguments: _menuList![index]),
+                            //arguments: _menuList![index]),
+                            arguments:
+                                ScreenArguments(menu!, _menuList![index])),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
