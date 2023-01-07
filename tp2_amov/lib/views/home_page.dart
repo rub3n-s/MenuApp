@@ -44,60 +44,49 @@ class _HomePageState extends State<HomePage> {
   createMenuList() {
     debugPrint(DateFormat('EEEE').format(DateTime.now()));
 
-    switch (DateFormat('EEEE').format(DateTime.now())) {
-      case 'Monday':
-        _menuList = [
-          menu!.monday,
-          menu!.tuesday,
-          menu!.thursday,
-          menu!.wednesday,
-          menu!.friday
-        ];
-        break;
-      case 'Tuesday':
-        _menuList = [
-          menu!.tuesday,
-          menu!.thursday,
-          menu!.wednesday,
-          menu!.friday,
-          menu!.monday,
-        ];
-        break;
-      case 'Thursday':
-        _menuList = [
-          menu!.thursday,
-          menu!.wednesday,
-          menu!.friday,
-          menu!.monday,
-          menu!.tuesday
-        ];
-        break;
-      case 'Wednesday':
-        _menuList = [
-          menu!.wednesday,
-          menu!.friday,
-          menu!.monday,
-          menu!.tuesday,
-          menu!.thursday,
-        ];
-        break;
-      case 'Friday':
-        _menuList = [
-          menu!.friday,
-          menu!.monday,
-          menu!.tuesday,
-          menu!.thursday,
-          menu!.wednesday
-        ];
+    //  Default order
+    _menuList = [
+      menu!.monday,
+      menu!.tuesday,
+      menu!.thursday,
+      menu!.wednesday,
+      menu!.friday
+    ];
+
+    List<Day>? aux = [];
+    String currentDay = DateFormat('EEEE').format(DateTime.now());
+    bool copyNext = false;
+
+    switch (currentDay.toUpperCase()) {
+      // List already sorted
+      case 'MONDAY':
+        return;
+      case 'TUESDAY':
+      case 'THURSDAY':
+      case 'WEDNESDAY':
+      case 'FRIDAY':
+        // Copies current day and next days
+        for (var day in _menuList!) {
+          if (day.original.weekDay.toUpperCase() == currentDay.toUpperCase()) {
+            aux.add(day);
+            copyNext = true;
+            continue;
+          } else if (copyNext) {
+            aux.add(day);
+          }
+        }
+
+        // Copy the days before
+        for (var day in _menuList!) {
+          if (day.original.weekDay.toUpperCase() == currentDay.toUpperCase())
+            break;
+          aux.add(day);
+        }
+
+        // Assign the ordered list
+        _menuList = aux;
         break;
       default:
-        _menuList = [
-          menu!.monday,
-          menu!.tuesday,
-          menu!.thursday,
-          menu!.wednesday,
-          menu!.friday
-        ];
         break;
     }
   }
