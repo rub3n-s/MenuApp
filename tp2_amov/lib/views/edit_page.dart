@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tp2_amov/models/screen_arguments.dart';
+import 'package:tp2_amov/views/home_page.dart';
 
 import '../models/menu.dart';
 import '../services/remote_service.dart';
@@ -16,72 +17,57 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   late final ScreenArguments _menu =
       ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-  //late final Day _menu = ModalRoute.of(context)!.settings.arguments as Day;
   late final Day _updatedDay = _menu.day;
 
-  updateSoup(String value) {
-    if (value.isNotEmpty) {
-      _updatedDay.original.soup = value;
-    } else {
-      _updatedDay.original.soup = _menu.day.original.soup;
-    }
-  }
+  final _soupController = TextEditingController();
+  final _meatController = TextEditingController();
+  final _fishController = TextEditingController();
+  final _vegetarianController = TextEditingController();
+  final _desertController = TextEditingController();
 
-  updateMeat(String value) {
-    if (value.isNotEmpty) {
-      _updatedDay.original.meat = value;
-    } else {
-      _updatedDay.original.meat = _menu.day.original.meat;
-    }
-  }
+  @override
+  void initState() {
+    super.initState();
 
-  updateFish(String value) {
-    if (value.isNotEmpty) {
-      _updatedDay.original.fish = value;
-    } else {
-      _updatedDay.original.fish = _menu.day.original.fish;
-    }
-  }
-
-  updateVegetarian(String value) {
-    if (value.isNotEmpty) {
-      _updatedDay.original.vegetarian = value;
-    } else {
-      _updatedDay.original.vegetarian = _menu.day.original.vegetarian;
-    }
-  }
-
-  updateDesert(String value) {
-    if (value.isNotEmpty) {
-      _updatedDay.original.desert = value;
-    } else {
-      _updatedDay.original.desert = _menu.day.original.desert;
-    }
+    Future.delayed(Duration.zero, () {
+      _soupController.text = _menu.day.original.soup;
+      _meatController.text = _menu.day.original.meat;
+      _fishController.text = _menu.day.original.fish;
+      _vegetarianController.text = _menu.day.original.vegetarian;
+      _desertController.text = _menu.day.original.desert;
+    });
   }
 
   postToJson() async {
-    // get the current menu
-    /*Menu? tmp = await RemoteService().getMenu();
+    if (_soupController.text.isNotEmpty) {
+      _updatedDay.original.soup = _soupController.text;
+    } else {
+      _updatedDay.original.soup = _menu.day.original.soup;
+    }
 
-    debugPrint('Updating Day: ${_updatedDay.original.weekDay}');
+    if (_meatController.text.isNotEmpty) {
+      _updatedDay.original.meat = _meatController.text;
+    } else {
+      _updatedDay.original.meat = _menu.day.original.meat;
+    }
 
-    switch (_updatedDay.original.weekDay) {
-      case "MONDAY":
-        tmp!.monday = _updatedDay;
-        break;
-      case "TUESDAY":
-        tmp!.tuesday = _updatedDay;
-        break;
-      case "WEDNESDAY":
-        tmp!.wednesday = _updatedDay;
-        break;
-      case "THURSDAY":
-        tmp!.thursday = _updatedDay;
-        break;
-      case "FRIDAY":
-        tmp!.friday = _updatedDay;
-        break;
-    } */
+    if (_fishController.text.isNotEmpty) {
+      _updatedDay.original.fish = _fishController.text;
+    } else {
+      _updatedDay.original.fish = _menu.day.original.fish;
+    }
+
+    if (_vegetarianController.text.isNotEmpty) {
+      _updatedDay.original.vegetarian = _vegetarianController.text;
+    } else {
+      _updatedDay.original.vegetarian = _menu.day.original.vegetarian;
+    }
+
+    if (_desertController.text.isNotEmpty) {
+      _updatedDay.original.desert = _desertController.text;
+    } else {
+      _updatedDay.original.desert = _menu.day.original.desert;
+    }
 
     // post to json
     RemoteService().setMenu(_updatedDay.original);
@@ -101,82 +87,149 @@ class _EditPageState extends State<EditPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Soup: ', border: OutlineInputBorder()),
-                        initialValue: _menu.day.original.soup,
-                        onChanged: (value) => updateSoup(value),
-                        maxLines: null),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  // Meat
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Meat: ',
-                          border: OutlineInputBorder(),
+                  Row(children: [
+                    Expanded(
+                      flex: 5,
+                      child: TextField(
+                          controller: _soupController,
+                          decoration: const InputDecoration(
+                              labelText: 'Soup: ',
+                              border: OutlineInputBorder()),
+                          maxLines: null),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: FloatingActionButton(
+                          heroTag: 'refreshSoup',
+                          onPressed: () =>
+                              {_soupController.text = _menu.day.original.soup},
+                          tooltip: 'Refresh',
+                          child: const Icon(Icons.refresh),
                         ),
-                        initialValue: _menu.day.original.meat,
-                        onChanged: (value) => updateMeat(value),
-                        maxLines: null),
-                  ),
+                      ),
+                    )
+                  ]),
                   const SizedBox(
                     height: 40,
                   ),
-                  // Fish
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Fish: ',
-                          border: OutlineInputBorder(),
+                  Row(children: [
+                    Expanded(
+                      flex: 5,
+                      child: TextField(
+                          controller: _meatController,
+                          decoration: const InputDecoration(
+                              labelText: 'Meat: ',
+                              border: OutlineInputBorder()),
+                          maxLines: null),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: FloatingActionButton(
+                          heroTag: 'refreshMeat',
+                          onPressed: () =>
+                              {_meatController.text = _menu.day.original.meat},
+                          tooltip: 'Refresh',
+                          child: const Icon(Icons.refresh),
                         ),
-                        initialValue: _menu.day.original.fish,
-                        onChanged: (value) => updateFish(value),
-                        maxLines: null),
-                  ),
+                      ),
+                    )
+                  ]),
                   const SizedBox(
                     height: 40,
                   ),
-                  // Vegetarian
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Vegetarian: ',
-                          border: OutlineInputBorder(),
+                  Row(children: [
+                    Expanded(
+                      flex: 5,
+                      child: TextField(
+                          controller: _fishController,
+                          decoration: const InputDecoration(
+                              labelText: 'Fish: ',
+                              border: OutlineInputBorder()),
+                          maxLines: null),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: FloatingActionButton(
+                          heroTag: 'refreshFish',
+                          onPressed: () =>
+                              {_fishController.text = _menu.day.original.fish},
+                          tooltip: 'Refresh',
+                          child: const Icon(Icons.refresh),
                         ),
-                        initialValue: _menu.day.original.vegetarian,
-                        onChanged: (value) => updateVegetarian(value),
-                        maxLines: null),
-                  ),
+                      ),
+                    )
+                  ]),
                   const SizedBox(
                     height: 40,
                   ),
-                  // Desert
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Desert: ',
-                          border: OutlineInputBorder(),
+                  Row(children: [
+                    Expanded(
+                      flex: 5,
+                      child: TextField(
+                          controller: _meatController,
+                          decoration: const InputDecoration(
+                              labelText: 'Vegetarian: ',
+                              border: OutlineInputBorder()),
+                          maxLines: null),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: FloatingActionButton(
+                          heroTag: 'refreshVeggie',
+                          onPressed: () => {
+                            _vegetarianController.text =
+                                _menu.day.original.vegetarian
+                          },
+                          tooltip: 'Refresh',
+                          child: const Icon(Icons.refresh),
                         ),
-                        initialValue: _menu.day.original.desert,
-                        onChanged: (value) => updateDesert(value),
-                        maxLines: null),
-                  ),
+                      ),
+                    )
+                  ]),
                   const SizedBox(
                     height: 40,
+                  ),
+                  Row(children: [
+                    Expanded(
+                      flex: 5,
+                      child: TextField(
+                          controller: _desertController,
+                          decoration: const InputDecoration(
+                              labelText: 'Desert: ',
+                              border: OutlineInputBorder()),
+                          maxLines: null),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: FloatingActionButton(
+                          heroTag: 'refreshDesert',
+                          onPressed: () => {
+                            _desertController.text = _menu.day.original.desert
+                          },
+                          tooltip: 'Refresh',
+                          child: const Icon(Icons.refresh),
+                        ),
+                      ),
+                    )
+                  ]),
+                  const SizedBox(
+                    height: 30,
                   ),
                   ElevatedButton(
                       onPressed: () {
                         postToJson();
-                        Navigator.pop(context, true);
+                        Navigator.pushNamed(context, HomePage.routeName);
+                        //Navigator.pop(context, true);
                       },
                       child: const Text('Confirm'))
                 ],
